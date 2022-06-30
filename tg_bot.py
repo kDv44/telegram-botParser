@@ -1,25 +1,26 @@
 import time
 import telebot
 from main import news_list
+from main import message_form
 
-API_KEY = '5586669103:AAH9qPNAy8kgkVEO0ELRgT2BmgbDAN8QByw'
-channel_id = 't.me/motosport_newsUA_bot'
+API_KEY = ''
 bot = telebot.TeleBot(API_KEY)
 
 
-@bot.message_handler(content_types=['text'])
-def commands(message):
-    if message.text == 'Start' or 'start':
+@bot.message_handler(commands=['Start'])
+def send_check(message):
+    if message.text == '/Start':
+        bot.send_message(message.chat.id, message_form)
 
         while True:
             post_text = news_list
             iter_ = news_list['news']
 
-            if post_text['news'] != news_list['news']:
-                bot.send_message(channel_id, news_list)
+            if post_text['news'] != iter_:
+                bot.send_message(message.chat.id, message_form)
                 time.sleep(1800)
     else:
-        bot.send_message(message.from_user.id, 'Enter start')
+        bot.send_message(message.chat.id, 'Enter /Start')
 
 
 bot.polling()
